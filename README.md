@@ -1,91 +1,75 @@
-# CS331 Project  
-## University Management System  
-### UML Use Case Diagram
-
----
-
-## 1. System Overview
-
-The **University Management System** is a centralized digital platform designed to manage academic and administrative activities for students, faculty, and administrators.  
-This UML Use Case Diagram illustrates the interactions between different users (actors) and the system.
-
----
-
-## 2. Actors
-
-- **Student** – Manages academic and personal activities
-- **Faculty** – Handles teaching, assessments, and student interactions
-- **Admin** – Manages system-level operations and configurations
-
----
-
-## 3. UML Use Case Diagram
-
 ```mermaid
-usecaseDiagram
+flowchart LR
 
-actor Student
-actor Faculty
-actor Admin
+%% ===== Actors =====
+Student([🎓 Student])
+Faculty([👨‍🏫 Faculty])
+Admin([🧑‍💼 Admin])
 
-rectangle "University Management System" {
+%% ===== System Boundary =====
+subgraph UMS["University Management System"]
 
-    %% ======================
     %% Student Use Cases
-    %% ======================
-    Student --> (Login)
-    Student --> (View Dashboard)
-    Student --> (Complete Profile)
-    Student --> (Register / Modify Courses)
-    Student --> (View Attendance)
-    Student --> (View Grades & GPA)
-    Student --> (Apply for Leave)
-    Student --> (Update Personal Information)
-    Student --> (Request Documents)
-    Student --> (Participate in Clubs & Events)
-    Student --> (View Notifications)
-    Student --> (Logout)
+    UC1((Login))
+    UC2((View Dashboard))
+    UC3((Complete Profile))
+    UC4((Register / Modify Courses))
+    UC5((View Attendance))
+    UC6((View Grades & GPA))
+    UC7((Apply for Leave))
+    UC8((Update Personal Information))
+    UC9((Request Documents))
+    UC10((Participate in Clubs & Events))
+    UC11((View Notifications))
+    UC12((Logout))
 
-    %% ======================
     %% Faculty Use Cases
-    %% ======================
-    Faculty --> (Login)
-    Faculty --> (View Dashboard)
-    Faculty --> (Mark Attendance)
-    Faculty --> (Manage Grades)
-    Faculty --> (Upload Study Materials)
-    Faculty --> (Create Assessments)
-    Faculty --> (Approve Student Requests)
-    Faculty --> (Monitor Student Performance)
-    Faculty --> (Send Messages & Feedback)
-    Faculty --> (Apply for Leave)
-    Faculty --> (View Notifications)
-    Faculty --> (Logout)
+    UC13((Mark Attendance))
+    UC14((Manage Grades))
+    UC15((Upload Study Materials))
+    UC16((Create Assessments))
+    UC17((Approve Student Requests))
+    UC18((Monitor Student Performance))
+    UC19((Send Messages & Feedback))
 
-    %% ======================
     %% Admin Use Cases
-    %% ======================
-    Admin --> (Login)
-    Admin --> (Manage Users)
-    Admin --> (Assign Roles)
-    Admin --> (Manage Courses)
-    Admin --> (Generate Reports)
-    Admin --> (System Configuration)
-    Admin --> (Logout)
+    UC20((Manage Users))
+    UC21((Assign Roles))
+    UC22((Manage Courses))
+    UC23((Generate Reports))
+    UC24((System Configuration))
 
-    %% ======================
-    %% Include Relationships
-    %% ======================
-    (Register / Modify Courses) ..> (Login) : <<include>>
-    (View Attendance) ..> (Login) : <<include>>
-    (View Grades & GPA) ..> (Login) : <<include>>
-    (Apply for Leave) ..> (Login) : <<include>>
-    (Request Documents) ..> (Login) : <<include>>
+end
 
-    (Mark Attendance) ..> (Login) : <<include>>
-    (Manage Grades) ..> (Login) : <<include>>
-    (Upload Study Materials) ..> (Login) : <<include>>
+%% ===== Relationships =====
+Student --> UC1
+Student --> UC2
+Student --> UC3
+Student --> UC4
+Student --> UC5
+Student --> UC6
+Student --> UC7
+Student --> UC8
+Student --> UC9
+Student --> UC10
+Student --> UC11
+Student --> UC12
 
-    (Manage Users) ..> (Login) : <<include>>
-    (Assign Roles) ..> (Login) : <<include>>
-}
+Faculty --> UC1
+Faculty --> UC13
+Faculty --> UC14
+Faculty --> UC15
+Faculty --> UC16
+Faculty --> UC17
+Faculty --> UC18
+Faculty --> UC19
+Faculty --> UC11
+Faculty --> UC12
+
+Admin --> UC1
+Admin --> UC20
+Admin --> UC21
+Admin --> UC22
+Admin --> UC23
+Admin --> UC24
+Admin --> UC12
