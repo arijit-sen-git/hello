@@ -104,4 +104,3 @@ rectangle "University Management System" {
     UC_ApplyLeave ..> UC_ApproveRequests : <<extend>>
     UC_RequestDocs ..> UC_ApproveRequests : <<extend>>
 }
-```
