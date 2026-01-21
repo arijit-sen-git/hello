@@ -1,8 +1,8 @@
-usecaseDiagram
+## usecaseDiagram
 
-actor Student
-actor Faculty
-actor Admin
+## actor Student
+## actor Faculty
+## actor Admin
 
 rectangle "University Management System" {
 
