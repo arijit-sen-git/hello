@@ -1,98 +1,79 @@
-```mermaid
-usecaseDiagram
+flowchart LR
 
-actor Student
-actor Faculty
-actor Admin
+%% Actors
+Student([Student])
+Faculty([Faculty])
+Admin([Admin])
 
-%% =====================
-%% Authentication
-%% =====================
-(Login)
-(Signup)
-(Logout)
+%% System Boundary
+subgraph UMS [University Management System]
 
-Student --> (Login)
-Student --> (Signup)
-Faculty --> (Login)
-Admin --> (Login)
+  Login((Login))
+  Signup((Signup))
+  Logout((Logout))
 
-Student --> (Logout)
-Faculty --> (Logout)
-Admin --> (Logout)
+  ViewDashboard((View Dashboard))
+  UpdateProfile((Update Profile))
+  CourseReg((Course Registration))
+  ViewAttendance((View Attendance))
+  ViewGrades((View Grades & GPA))
+  ApplyLeave((Apply for Leave))
+  RequestDocs((Request Documents))
+  ViewNotifications((View Notifications))
 
-%% =====================
-%% Student Use Cases
-%% =====================
-(View Dashboard)
-(Update Profile)
-(Course Registration)
-(View Attendance)
-(View Grades & GPA)
-(Apply for Leave)
-(Request Documents)
-(Participate in Clubs)
-(Vote in Elections)
-(View Notifications)
+  MarkAttendance((Mark Attendance))
+  ManageGrades((Manage Grades))
+  UploadMaterial((Upload Study Material))
+  CreateAssessments((Create Assessments))
+  ApproveRequests((Approve Requests))
+  MonitorPerformance((Monitor Performance))
+  MessageStudents((Message Students))
+  GenerateReports((Generate Reports))
 
-Student --> (View Dashboard)
-Student --> (Update Profile)
-Student --> (Course Registration)
-Student --> (View Attendance)
-Student --> (View Grades & GPA)
-Student --> (Apply for Leave)
-Student --> (Request Documents)
-Student --> (Participate in Clubs)
-Student --> (Vote in Elections)
-Student --> (View Notifications)
+  ManageUsers((Manage Users))
+  AssignRoles((Assign Roles & Permissions))
+  ManageCourses((Manage Courses & Departments))
+  PublishAnnouncements((Publish Announcements))
+  SystemMonitoring((System Monitoring))
+  BackupRecovery((Backup & Recovery))
 
-%% =====================
-%% Faculty Use Cases
-%% =====================
-(View Faculty Dashboard)
-(Mark Attendance)
-(Manage Grades)
-(Upload Study Material)
-(Create Assessments)
-(Approve Requests)
-(Monitor Performance)
-(Message Students)
-(Generate Reports)
+end
 
-Faculty --> (View Faculty Dashboard)
-Faculty --> (Mark Attendance)
-Faculty --> (Manage Grades)
-Faculty --> (Upload Study Material)
-Faculty --> (Create Assessments)
-Faculty --> (Approve Requests)
-Faculty --> (Monitor Performance)
-Faculty --> (Message Students)
-Faculty --> (Generate Reports)
+%% Associations
+Student --> Login
+Student --> Signup
+Student --> Logout
+Student --> ViewDashboard
+Student --> UpdateProfile
+Student --> CourseReg
+Student --> ViewAttendance
+Student --> ViewGrades
+Student --> ApplyLeave
+Student --> RequestDocs
+Student --> ViewNotifications
 
-%% =====================
-%% Admin Use Cases
-%% =====================
-(Manage Users)
-(Assign Roles & Permissions)
-(Manage Courses & Departments)
-(Publish Announcements)
-(System Monitoring)
-(Backup & Recovery)
+Faculty --> Login
+Faculty --> Logout
+Faculty --> MarkAttendance
+Faculty --> ManageGrades
+Faculty --> UploadMaterial
+Faculty --> CreateAssessments
+Faculty --> ApproveRequests
+Faculty --> MonitorPerformance
+Faculty --> MessageStudents
+Faculty --> GenerateReports
 
-Admin --> (Manage Users)
-Admin --> (Assign Roles & Permissions)
-Admin --> (Manage Courses & Departments)
-Admin --> (Approve Requests)
-Admin --> (Publish Announcements)
-Admin --> (System Monitoring)
-Admin --> (Backup & Recovery)
+Admin --> Login
+Admin --> Logout
+Admin --> ManageUsers
+Admin --> AssignRoles
+Admin --> ManageCourses
+Admin --> PublishAnnouncements
+Admin --> SystemMonitoring
+Admin --> BackupRecovery
 
-%% =====================
 %% Include / Extend
-%% =====================
-(View Dashboard) ..> (View Notifications) : <<include>>
-(View Faculty Dashboard) ..> (View Notifications) : <<include>>
-(Manage Grades) ..> (Monitor Performance) : <<include>>
-
-(Apply for Leave) ..> (Approve Requests) : <<extend>>
-(Request Documents) ..> (Approve Requests) : <<extend>>
+ViewDashboard -.-> ViewNotifications
+ManageGrades -.-> MonitorPerformance
+ApplyLeave -.-> ApproveRequests
+RequestDocs -.-> ApproveRequests
