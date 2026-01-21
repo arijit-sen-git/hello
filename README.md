@@ -1,75 +1,104 @@
-```mermaid
-flowchart LR
+usecaseDiagram
 
-%% ===== Actors =====
-Student([🎓 Student])
-Faculty([👨‍🏫 Faculty])
-Admin([🧑‍💼 Admin])
+actor Student
+actor Faculty
+actor Admin
 
-%% ===== System Boundary =====
-subgraph UMS["University Management System"]
+rectangle "University Management System" {
 
+    %% =====================
+    %% Authentication
+    %% =====================
+    (Login) as UC_Login
+    (Signup) as UC_Signup
+    (Logout) as UC_Logout
+
+    Student --> UC_Login
+    Student --> UC_Signup
+    Faculty --> UC_Login
+    Admin --> UC_Login
+
+    Student --> UC_Logout
+    Faculty --> UC_Logout
+    Admin --> UC_Logout
+
+    %% =====================
     %% Student Use Cases
-    UC1((Login))
-    UC2((View Dashboard))
-    UC3((Complete Profile))
-    UC4((Register / Modify Courses))
-    UC5((View Attendance))
-    UC6((View Grades & GPA))
-    UC7((Apply for Leave))
-    UC8((Update Personal Information))
-    UC9((Request Documents))
-    UC10((Participate in Clubs & Events))
-    UC11((View Notifications))
-    UC12((Logout))
+    %% =====================
+    (View Dashboard) as UC_StudentDashboard
+    (Update Profile) as UC_UpdateProfile
+    (Course Registration) as UC_CourseReg
+    (View Attendance) as UC_ViewAttendance
+    (View Grades & GPA) as UC_ViewGrades
+    (Apply for Leave) as UC_ApplyLeave
+    (Request Documents) as UC_RequestDocs
+    (Participate in Clubs) as UC_Clubs
+    (Vote in Elections) as UC_Elections
+    (View Notifications) as UC_Notifications
 
+    Student --> UC_StudentDashboard
+    Student --> UC_UpdateProfile
+    Student --> UC_CourseReg
+    Student --> UC_ViewAttendance
+    Student --> UC_ViewGrades
+    Student --> UC_ApplyLeave
+    Student --> UC_RequestDocs
+    Student --> UC_Clubs
+    Student --> UC_Elections
+    Student --> UC_Notifications
+
+    %% =====================
     %% Faculty Use Cases
-    UC13((Mark Attendance))
-    UC14((Manage Grades))
-    UC15((Upload Study Materials))
-    UC16((Create Assessments))
-    UC17((Approve Student Requests))
-    UC18((Monitor Student Performance))
-    UC19((Send Messages & Feedback))
+    %% =====================
+    (View Faculty Dashboard) as UC_FacultyDashboard
+    (Mark Attendance) as UC_MarkAttendance
+    (Manage Grades) as UC_ManageGrades
+    (Upload Study Material) as UC_UploadMaterial
+    (Create Assessments) as UC_CreateAssessments
+    (Approve Requests) as UC_ApproveRequests
+    (Monitor Performance) as UC_MonitorPerformance
+    (Message Students) as UC_MessageStudents
+    (Generate Reports) as UC_GenerateReports
 
+    Faculty --> UC_FacultyDashboard
+    Faculty --> UC_MarkAttendance
+    Faculty --> UC_ManageGrades
+    Faculty --> UC_UploadMaterial
+    Faculty --> UC_CreateAssessments
+    Faculty --> UC_ApproveRequests
+    Faculty --> UC_MonitorPerformance
+    Faculty --> UC_MessageStudents
+    Faculty --> UC_GenerateReports
+
+    %% =====================
     %% Admin Use Cases
-    UC20((Manage Users))
-    UC21((Assign Roles))
-    UC22((Manage Courses))
-    UC23((Generate Reports))
-    UC24((System Configuration))
+    %% =====================
+    (Manage Users) as UC_ManageUsers
+    (Assign Roles & Permissions) as UC_Roles
+    (Manage Courses & Departments) as UC_ManageCourses
+    (Publish Announcements) as UC_Announcements
+    (System Monitoring) as UC_SystemMonitoring
+    (Backup & Recovery) as UC_Backup
 
-end
+    Admin --> UC_ManageUsers
+    Admin --> UC_Roles
+    Admin --> UC_ManageCourses
+    Admin --> UC_ApproveRequests
+    Admin --> UC_Announcements
+    Admin --> UC_SystemMonitoring
+    Admin --> UC_Backup
 
-%% ===== Relationships =====
-Student --> UC1
-Student --> UC2
-Student --> UC3
-Student --> UC4
-Student --> UC5
-Student --> UC6
-Student --> UC7
-Student --> UC8
-Student --> UC9
-Student --> UC10
-Student --> UC11
-Student --> UC12
+    %% =====================
+    %% Include Relationships
+    %% =====================
+    UC_StudentDashboard ..> UC_Notifications : <<include>>
+    UC_FacultyDashboard ..> UC_Notifications : <<include>>
+    UC_ManageGrades ..> UC_MonitorPerformance : <<include>>
+    UC_ManageUsers ..> UC_Roles : <<include>>
 
-Faculty --> UC1
-Faculty --> UC13
-Faculty --> UC14
-Faculty --> UC15
-Faculty --> UC16
-Faculty --> UC17
-Faculty --> UC18
-Faculty --> UC19
-Faculty --> UC11
-Faculty --> UC12
-
-Admin --> UC1
-Admin --> UC20
-Admin --> UC21
-Admin --> UC22
-Admin --> UC23
-Admin --> UC24
-Admin --> UC12
+    %% =====================
+    %% Extend Relationships
+    %% =====================
+    UC_ApplyLeave ..> UC_ApproveRequests : <<extend>>
+    UC_RequestDocs ..> UC_ApproveRequests : <<extend>>
+}
