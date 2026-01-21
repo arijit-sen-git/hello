@@ -1,8 +1,10 @@
-## usecaseDiagram
+```mermaid
 
-## actor Student
-## actor Faculty
-## actor Admin
+usecaseDiagram
+
+actor Student
+actor Faculty
+actor Admin
 
 rectangle "University Management System" {
 
@@ -102,3 +104,4 @@ rectangle "University Management System" {
     UC_ApplyLeave ..> UC_ApproveRequests : <<extend>>
     UC_RequestDocs ..> UC_ApproveRequests : <<extend>>
 }
+```
