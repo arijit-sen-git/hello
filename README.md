@@ -1,80 +1,58 @@
 ```mermaid
 flowchart LR
+    %% External Entities
+    Student[Student]
+    Faculty[Faculty]
+    Admin[Admin]
+    Auth["Authentication Service"]
 
-%% Actors
-Student([Student])
-Faculty([Faculty])
-Admin([Admin])
+    %% Processes
+    P1(("1.0 User Authentication"))
+    P2(("2.0 Assignment Management"))
+    P3(("3.0 Exam Re-evaluation Processing"))
+    P4(("4.0 Leave and Attendance Processing"))
+    P5(("5.0 Notification Management"))
 
-%% System Boundary
-subgraph Portal [University]
+    %% Data Stores
+    D1[(D1 Student Records)]
+    D2[(D2 Faculty Records)]
+    D3[(D3 Assignment Records)]
+    D4[(D4 Attendance Records)]
+    D5[(D5 Document Store)]
 
-  Login((Login))
-  Signup((Signup))
-  Logout((Logout))
+    %% Authentication
+    Student -->|Login credentials| P1
+    Faculty -->|Login credentials| P1
+    Admin -->|Login credentials| P1
+    P1 -->|Auth request| Auth
+    Auth -->|Auth response| P1
+    P1 -->|User profile data| D1
+    P1 -->|Faculty data| D2
 
-  ViewDashboard((View Dashboard))
-  UpdateProfile((Update Profile))
-  CourseReg((Course Registration))
-  ViewAttendance((View Attendance))
-  ViewGrades((View Grades & GPA))
-  ApplyLeave((Apply for Leave))
-  RequestDocs((Request Documents))
-  ViewNotifications((View Notifications))
+    %% Assignment Management
+    Student -->|Assignment submission| P2
+    Faculty -->|Evaluation, marks| P2
+    Admin -->|Workflow rules, SLA, overrides| P2
+    P2 -->|Store assignment details| D3
+    P2 -->|Store files| D5
+    P2 -->|Assignment status| P5
 
-  MarkAttendance((Mark Attendance))
-  ManageGrades((Manage Grades))
-  UploadMaterial((Upload Study Material))
-  CreateAssessments((Create Assessments))
-  ApproveRequests((Approve Requests))
-  MonitorPerformance((Monitor Performance))
-  MessageStudents((Message Students))
-  GenerateReports((Generate Reports))
+    %% Exam Re-evaluation
+    Student -->|Re-evaluation request| P3
+    Faculty -->|Updated grade| P3
+    Admin -->|Override policies| P3
+    P3 -->|Update grade data| D3
+    P3 -->|Result status| P5
 
-  ManageUsers((Manage Users))
-  AssignRoles((Assign Roles & Permissions))
-  ManageCourses((Manage Courses & Departments))
-  PublishAnnouncements((Publish Announcements))
-  SystemMonitoring((System Monitoring))
-  BackupRecovery((Backup & Recovery))
+    %% Leave and Attendance
+    Student -->|Leave / attendance request| P4
+    Faculty -->|Approval decision| P4
+    P4 -->|Update attendance| D4
+    P4 -->|Approval status| P5
 
-end
-
-%% Associations
-Student --> Login
-Student --> Signup
-Student --> Logout
-Student --> ViewDashboard
-Student --> UpdateProfile
-Student --> CourseReg
-Student --> ViewAttendance
-Student --> ViewGrades
-Student --> ApplyLeave
-Student --> RequestDocs
-Student --> ViewNotifications
-
-Faculty --> Login
-Faculty --> Logout
-Faculty --> MarkAttendance
-Faculty --> ManageGrades
-Faculty --> UploadMaterial
-Faculty --> CreateAssessments
-Faculty --> ApproveRequests
-Faculty --> MonitorPerformance
-Faculty --> MessageStudents
-Faculty --> GenerateReports
-
-Admin --> Login
-Admin --> Logout
-Admin --> ManageUsers
-Admin --> AssignRoles
-Admin --> ManageCourses
-Admin --> PublishAnnouncements
-Admin --> SystemMonitoring
-Admin --> BackupRecovery
-
-%% Include / Extend
-ViewDashboard -.-> ViewNotifications
-ManageGrades -.-> MonitorPerformance
-ApplyLeave -.-> ApproveRequests
-RequestDocs -.-> ApproveRequests
+    %% Notifications and Monitoring
+    Admin -->|Announcements, alerts| P5
+    P5 -->|Notifications| Student
+    P5 -->|Notifications| Faculty
+    P5 -->|Reports, monitoring data| Admin
+```
